@@ -28,7 +28,7 @@ const MiddleNavbar = () => {
               <Image src={logo} alt="logo" boxSize="45px" width="100%"></Image>
             </Link>
           </Box>
-          <Box>
+          <Box className="search">
             <InputGroup size="md" borderColor="black" centerContent>
               <Input
                 placeholder="Search"
