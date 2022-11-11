@@ -59,6 +59,16 @@ const MiddleNavbar = () => {
               </Button>
             </Link>
           </Box>
+          <Center height="20px" backgroundColor="black">
+            <Divider orientation="vertical" />
+          </Center>
+          <Box>
+            <Link to="./cart">
+              <Button variant="link" color="black">
+                CART
+              </Button>
+            </Link>
+          </Box>
         </HStack>
       </Flex>
     </Container>

@@ -1,30 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { Container, Box, Heading, Grid, GridItem } from "@chakra-ui/react";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  Container,
+  Box,
+  Heading,
+  Grid,
+  GridItem,
+  Image,
+  Button,
+} from "@chakra-ui/react";
+import IndividualPage from "./IndividualPage";
+import { addToCart } from "../Context/CartContext/action";
+import { CartContext } from "../Context/CartContext/CartContextProvider";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const { state, dispatch } = useContext(CartContext);
+
+  const itemAlreadyExists = (id, cartItems) => {
+    if (cartItems.find((item) => item.id === id)) {
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
+    fetch("https://dummyjson.com/products?limit=100")
       .then((res) => res.json())
       .then((res) => setData(res.products));
   }, []);
 
   return (
     <>
-      <Container
-        maxW="6xl"
-        centerContent
-        border="1px solid black"
-        marginTop="40px"
-        marginBottom="50px"
-      >
-        <Box padding="14" color="black" maxW="md">
-          There are many benefits to a joint design and development system. Not
-          only does it bring benefits to the design team, but it also brings
-          benefits to engineering teams. It makes sure that our experiences have
-          a consistent look and feel, not just in our design specs, but in
-          production.
+      <Container maxW="6xl" centerContent marginTop="40px" marginBottom="50px">
+        <Box maxW="5xl">
+          <Image
+            src="https://d64lkarmo2mrq.cloudfront.net/img/home/4544_500_off.webp"
+            fit="fill"
+          />
         </Box>
       </Container>
       <Container maxW="6xl" centerContent>
@@ -40,8 +52,25 @@ const Home = () => {
                 return item.category === "smartphones";
               })
               .map((product) => (
-                <GridItem w="300px" h="250px" bg="blue.500">
-                  {product.title}
+                <GridItem
+                  p="20px"
+                  w="300px"
+                  h="auto"
+                  textAlign="center"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                >
+                  <Box>
+                    <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="yellow"
+                      onClick={() => dispatch(addToCart(product))}
+                      disabled={itemAlreadyExists(product.id, state)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Box>
                 </GridItem>
               ))}
           </Grid>
@@ -50,32 +79,74 @@ const Home = () => {
       <Container maxW="6xl" centerContent>
         <Box marginBottom="20px">
           <Heading as="h4" size="lg">
-            Home Decor
+            Furniture
           </Heading>
         </Box>
         <Box marginBottom="60px">
           <Grid templateColumns="repeat(5, 1fr)" gap={6} maxW="60%">
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
+            {data
+              .filter((item) => {
+                return item.category === "furniture";
+              })
+              .map((product) => (
+                <GridItem
+                  p="20px"
+                  w="300px"
+                  h="auto"
+                  textAlign="center"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                >
+                  <Box>
+                    <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="yellow"
+                      onClick={() => dispatch(addToCart(product))}
+                      disabled={itemAlreadyExists(product.id, state)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Box>
+                </GridItem>
+              ))}
           </Grid>
         </Box>
       </Container>
       <Container maxW="6xl" centerContent>
         <Box marginBottom="20px">
           <Heading as="h4" size="lg">
-            Small Appliances
+            Sunglasses
           </Heading>
         </Box>
         <Box marginBottom="60px">
           <Grid templateColumns="repeat(5, 1fr)" gap={6} maxW="60%">
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
+            {data
+              .filter((item) => {
+                return item.category === "sunglasses";
+              })
+              .map((product) => (
+                <GridItem
+                  p="20px"
+                  w="300px"
+                  h="auto"
+                  textAlign="center"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                >
+                  <Box>
+                    <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="yellow"
+                      onClick={() => dispatch(addToCart(product))}
+                      disabled={itemAlreadyExists(product.id, state)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Box>
+                </GridItem>
+              ))}
           </Grid>
         </Box>
       </Container>
@@ -87,27 +158,69 @@ const Home = () => {
         </Box>
         <Box marginBottom="60px">
           <Grid templateColumns="repeat(5, 1fr)" gap={6} maxW="60%">
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
+            {data
+              .filter((item) => {
+                return item.category === "mens-watches";
+              })
+              .map((product) => (
+                <GridItem
+                  p="20px"
+                  w="300px"
+                  h="auto"
+                  textAlign="center"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                >
+                  <Box>
+                    <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="yellow"
+                      onClick={() => dispatch(addToCart(product))}
+                      disabled={itemAlreadyExists(product.id, state)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Box>
+                </GridItem>
+              ))}
           </Grid>
         </Box>
       </Container>
       <Container maxW="6xl" centerContent>
         <Box marginBottom="20px">
           <Heading as="h4" size="lg">
-            Clothing
+            Jewellery
           </Heading>
         </Box>
         <Box marginBottom="60px">
           <Grid templateColumns="repeat(5, 1fr)" gap={6} maxW="60%">
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
-            <GridItem w="300px" h="250px" bg="blue.500" />
+            {data
+              .filter((item) => {
+                return item.category === "womens-jewellery";
+              })
+              .map((product) => (
+                <GridItem
+                  p="20px"
+                  w="300px"
+                  h="auto"
+                  textAlign="center"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                >
+                  <Box>
+                    <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="yellow"
+                      onClick={() => dispatch(addToCart(product))}
+                      disabled={itemAlreadyExists(product.id, state)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Box>
+                </GridItem>
+              ))}
           </Grid>
         </Box>
       </Container>
