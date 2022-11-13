@@ -8,7 +8,6 @@ import {
   Th,
   Td,
   TableContainer,
-  Link,
   Container,
   Box,
   Heading,
@@ -17,6 +16,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { FaFacebook, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -47,16 +47,16 @@ const Footer = () => {
               {/* 1st row */}
               <Tr>
                 <Td>
-                  <Link>Covid-19 Precautions</Link>
+                  <Link to="/moreinfo">Covid-19 Precautions</Link>
                 </Td>
                 <Td>
-                  <Link>Sell With Us</Link>
+                  <Link to="/moreinfo">Sell With Us</Link>
                 </Td>
                 <Td>
-                  <Link>How BeanBuy Works</Link>
+                  <Link to="/moreinfo">How BeanBuy Works</Link>
                 </Td>
                 <Td>
-                  <Link>General Information</Link>
+                  <Link to="/moreinfo">General Information</Link>
                 </Td>
                 <Td>
                   <Input
@@ -71,16 +71,16 @@ const Footer = () => {
               {/* 2nd row */}
               <Tr>
                 <Td>
-                  <Link>Our Promise</Link>
+                  <Link to="/moreinfo">Our Promise</Link>
                 </Td>
                 <Td>
-                  <Link>Career Opportunities</Link>
+                  <Link to="/moreinfo">Career Opportunities</Link>
                 </Td>
                 <Td>
-                  <Link>My Orders</Link>
+                  <Link to="/moreinfo">My Orders</Link>
                 </Td>
                 <Td>
-                  <Link>Signup</Link>
+                  <Link to="/moreinfo">Signup</Link>
                 </Td>
                 <Td>
                   <Button
@@ -96,13 +96,13 @@ const Footer = () => {
               {/* 3rd row */}
               <Tr>
                 <Td>
-                  <Link>Terms & Conditions</Link>
+                  <Link to="/moreinfo">Terms & Conditions</Link>
                 </Td>
                 <Td>
-                  <Link>Our Blog</Link>
+                  <Link to="/moreinfo">Our Blog</Link>
                 </Td>
                 <Td>
-                  <Link>Exchanges, Returns and Refunds</Link>
+                  <Link to="/moreinfo">Exchanges, Returns and Refunds</Link>
                 </Td>
                 <Td></Td>
                 <Td>
@@ -135,24 +135,24 @@ const Footer = () => {
               {/* 4th row */}
               <Tr>
                 <Td>
-                  <Link>Customs tariffs and fees</Link>
+                  <Link to="/moreinfo">Customs tariffs and fees</Link>
                 </Td>
                 <Td>
-                  <Link>Sitemap</Link>
+                  <Link to="/moreinfo">Sitemap</Link>
                 </Td>
                 <Td>
-                  <Link>Contact Us</Link>
+                  <Link to="/moreinfo">Contact Us</Link>
                 </Td>
               </Tr>
 
               {/* 5th row */}
               <Tr>
                 <Td>
-                  <Link>Privacy Policy</Link>
+                  <Link to="/moreinfo">Privacy Policy</Link>
                 </Td>
                 <Td></Td>
                 <Td>
-                  <Link>FAQ</Link>
+                  <Link to="/moreinfo">FAQ</Link>
                 </Td>
               </Tr>
             </Tbody>

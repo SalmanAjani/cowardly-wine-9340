@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -9,8 +9,36 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
+  let navigate = useNavigate();
+  const [registerDetails, setRegisterDetails] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterDetails({ ...registerDetails, [name]: value });
+  };
+
+  const handleRegister = () => {
+    axios({
+      method: "POST",
+      url: "https://dummyjson.com/users/add",
+      data: registerDetails,
+    })
+      .then((res) => {
+        alert("Registration Successfull, You can Login now");
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const { email, password } = registerDetails;
+
   return (
     <Container marginTop="40px" marginBottom="40px" textAlign="center">
       <Box marginBottom="30px">
@@ -19,21 +47,34 @@ const Login = () => {
       <Box textAlign="center">
         <FormControl>
           <FormLabel>Email address</FormLabel>
-          <Input type="email" borderColor="black" />
+          <Input
+            type="email"
+            borderColor="black"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl>
           <FormLabel>Password</FormLabel>
-          <Input type="password" borderColor="black" />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Confirm Password</FormLabel>
-          <Input type="password" borderColor="black" />
+          <Input
+            type="password"
+            borderColor="black"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl marginTop="20px" marginBottom="20px">
-          <Input type="submit" backgroundColor="teal" color="white" />
+          <Input
+            type="submit"
+            backgroundColor="teal"
+            color="white"
+            onClick={handleRegister}
+            cursor="pointer"
+          />
         </FormControl>
 
         <Box marginTop="10px" marginBottom="15px">
@@ -52,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
