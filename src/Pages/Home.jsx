@@ -11,10 +11,13 @@ import {
 import IndividualPage from "./IndividualPage";
 import { addToCart } from "../Context/CartContext/action";
 import { CartContext } from "../Context/CartContext/CartContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(CartContext);
+  let navigate = useNavigate();
 
   const itemAlreadyExists = (id, cartItems) => {
     if (cartItems.find((item) => item.id === id)) {
@@ -24,15 +27,27 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetch("https://dummyjson.com/products?limit=100")
       .then((res) => res.json())
-      .then((res) => setData(res.products));
+      .then((res) => {
+        setLoading(false);
+        setData(res.products);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   }, []);
+
+  if (loading) {
+    return <h1 style={{ fontSize: "30px" }}>Loading...</h1>;
+  }
 
   return (
     <>
       <Container maxW="6xl" centerContent marginTop="40px" marginBottom="50px">
-        <Box maxW="5xl">
+        <Box maxW="5xl" onClick={() => navigate("/cart")} cursor="pointer">
           <Image
             src="https://d64lkarmo2mrq.cloudfront.net/img/home/4544_500_off.webp"
             fit="fill"
@@ -53,6 +68,7 @@ const Home = () => {
               })
               .map((product) => (
                 <GridItem
+                  onClick={() => console.log("Item Clicked")}
                   p="20px"
                   w="300px"
                   h="auto"
@@ -63,6 +79,12 @@ const Home = () => {
                 >
                   <Box>
                     <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="teal"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      View Details
+                    </Button>
                     <Button
                       colorScheme="yellow"
                       onClick={() => dispatch(addToCart(product))}
@@ -101,6 +123,12 @@ const Home = () => {
                   <Box>
                     <IndividualPage key={product.id} {...product} />
                     <Button
+                      colorScheme="teal"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      View Details
+                    </Button>
+                    <Button
                       colorScheme="yellow"
                       onClick={() => dispatch(addToCart(product))}
                       disabled={itemAlreadyExists(product.id, state)}
@@ -137,6 +165,12 @@ const Home = () => {
                 >
                   <Box>
                     <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="teal"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      View Details
+                    </Button>
                     <Button
                       colorScheme="yellow"
                       onClick={() => dispatch(addToCart(product))}
@@ -175,6 +209,12 @@ const Home = () => {
                   <Box>
                     <IndividualPage key={product.id} {...product} />
                     <Button
+                      colorScheme="teal"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      View Details
+                    </Button>
+                    <Button
                       colorScheme="yellow"
                       onClick={() => dispatch(addToCart(product))}
                       disabled={itemAlreadyExists(product.id, state)}
@@ -193,7 +233,7 @@ const Home = () => {
             Jewellery
           </Heading>
         </Box>
-        <Box marginBottom="60px">
+        <Box marginBottom="90px">
           <Grid templateColumns="repeat(5, 1fr)" gap={6} maxW="60%">
             {data
               .filter((item) => {
@@ -211,6 +251,12 @@ const Home = () => {
                 >
                   <Box>
                     <IndividualPage key={product.id} {...product} />
+                    <Button
+                      colorScheme="teal"
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      View Details
+                    </Button>
                     <Button
                       colorScheme="yellow"
                       onClick={() => dispatch(addToCart(product))}
